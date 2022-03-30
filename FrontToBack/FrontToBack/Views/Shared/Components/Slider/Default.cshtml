@@ -5,7 +5,7 @@
 @foreach (var slider in Model)
 {
 
-            <div class="@slider.ClassName.ToLower()">
+            <div class="@slider.ClassName?.ToLower()">
                 <img src="~/assets/img/@slider.Image" alt="">
                 <div class="text-1">
                     <p>Exclusive offer <span class="btn-success discount-text">&nbsp; @slider.Discount% off &nbsp; </span></p>

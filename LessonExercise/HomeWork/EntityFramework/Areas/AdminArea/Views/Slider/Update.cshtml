@@ -7,7 +7,10 @@
 <div class="container">
     <form class="forms-sample" method="post" asp-action="Update" enctype="multipart/form-data">
         <div class="form-group">
-            <img src="~/img/@Model.Image" style="width:100px;height:100px"/>
+            @if (Model.Image != null)
+            {
+                <img src="~/img/@Model.Image" style="width:100px;height:100px" />
+            }
             <br />
             @* For Naming Label *@
             <label asp-for="Photo"></label>

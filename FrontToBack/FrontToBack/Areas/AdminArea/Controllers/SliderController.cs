@@ -55,7 +55,7 @@ namespace FrontToBack.Areas.AdminArea.Controllers
 
             string fileName = Guid.NewGuid().ToString() + "_" + slider.Photo.FileName;
 
-            string path = Helper.GetFilePath(_enviroment.WebRootPath, "img", fileName);
+            string path = Helper.GetFilePath(_enviroment.WebRootPath, "assets/img", fileName);
 
             using (FileStream stream = new FileStream(path, FileMode.Create))
             {
@@ -79,7 +79,7 @@ namespace FrontToBack.Areas.AdminArea.Controllers
 
             if (slider == null) return NotFound();
 
-            string path = Helper.GetFilePath(_enviroment.WebRootPath, "img", slider.Image);
+            string path = Helper.GetFilePath(_enviroment.WebRootPath, "assets/img", slider.Image);
 
             Helper.DeleteFile(path);
 
@@ -102,7 +102,7 @@ namespace FrontToBack.Areas.AdminArea.Controllers
 
             if (slider == null) NotFound();
 
-            return View();
+            return View(slider);
         }
 
 
@@ -112,25 +112,25 @@ namespace FrontToBack.Areas.AdminArea.Controllers
         {
             Slider dbSlider = await GetSliderById(id);
 
-            string path = Helper.GetFilePath(_enviroment.WebRootPath, "img", dbSlider.Image);
+            string path = Helper.GetFilePath(_enviroment.WebRootPath, "assets/img", dbSlider.Image);
 
             Helper.DeleteFile(path);
 
             if (!slider.Photo.CheckFileType("image/"))
             {
                 ModelState.AddModelError("Photo", "Only image type is accebtible");
-                return View();
+                return View(slider);
             }
 
             if (!slider.Photo.CheckFileSize(200))
             {
                 ModelState.AddModelError("Photo", "Must be Less than 200KB");
-                return View();
+                return View(slider);
             }
 
             string fileName = Guid.NewGuid().ToString() + "_" + slider.Photo.FileName;
 
-            string pathNew = Helper.GetFilePath(_enviroment.WebRootPath, "img", fileName);
+            string pathNew = Helper.GetFilePath(_enviroment.WebRootPath, "assets/img", fileName);
 
             using(FileStream stream = new FileStream(pathNew, FileMode.Create))
             {

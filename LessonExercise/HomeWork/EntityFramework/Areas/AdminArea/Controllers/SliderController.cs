@@ -111,22 +111,25 @@ namespace EntityFramework.Areas.AdminArea.Controllers
         public async Task<IActionResult> Update(int id,Slider slider)
         {
             Slider dbSlider = await _context.Sliders.FindAsync(id);
-
-            string path = Helper.GetFilePath(_enviroment.WebRootPath, "img", dbSlider.Image);
-
-            Helper.DeleteFile(path);
-
             if (!slider.Photo.CheckFileType("image/"))
             {
                 ModelState.AddModelError("Photo", "Only image type is accebtible");
-                return View();
+                return View(dbSlider);
             }
 
             if (!slider.Photo.CheckFileSize(200))
             {
                 ModelState.AddModelError("Photo", "Must be Less than 200KB");
-                return View();
+                return View(dbSlider);
             }
+
+            
+
+            if (dbSlider == null) NotFound();
+
+            string path = Helper.GetFilePath(_enviroment.WebRootPath, "img", dbSlider.Image);
+
+            Helper.DeleteFile(path);
 
             string fileName = Guid.NewGuid().ToString() + "_" + slider.Photo.FileName;
 
